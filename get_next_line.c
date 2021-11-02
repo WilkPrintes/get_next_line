@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/10/31 17:05:14 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/02 15:58:59 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ size_t	find_n(char *buffer)
 
 char	*read_line(char *buffer, int buffer_size, int fd)
 {
-	buffer = malloc(sizeof(char) * buffer_size + 1);
 	if (buffer == NULL)
 		return (NULL);
 	read (fd, buffer, buffer_size);
