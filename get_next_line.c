@@ -6,13 +6,13 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/02 15:58:59 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/02 17:18:23 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*read_line(char *buffer, int buffer_size, int fd);
+char	*read_line(char *buffer, int buffer_size, int fd, ssize_t *size);
 int		n_exists(char *buffer);
 size_t	find_n(char *buffer);
 
@@ -21,29 +21,27 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	char		*result;
 	static char	*backup;
-	size_t			temp;
+	ssize_t			temp;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 )
 		return (NULL);
-	buffer = malloc(sizeof(char) * BUFFER_SIZE);
 	buffer = 0;
-	buffer = read_line(buffer, BUFFER_SIZE, fd);
+	buffer = read_line(buffer, BUFFER_SIZE, fd, &temp);
 	if (ft_strlen(buffer) == 0 && ft_strlen(backup) == 0)
 		return (NULL);
 	if (backup)
 	{
 		buffer = ft_strjoin(backup, buffer);
 	}
-	while (n_exists(buffer) == 0 && temp - ft_strlen(buffer) != 0)
+	while (n_exists(buffer) == 0 && temp != 0)
 	{
-		temp = ft_strlen(buffer);
-		buffer = ft_strjoin(buffer, read_line(buffer, BUFFER_SIZE, fd));
+		buffer = ft_strjoin(buffer, read_line(buffer, BUFFER_SIZE, fd, &temp));
 	}
 	result = malloc (sizeof(char) * find_n (buffer));
 	ft_memmove(result, buffer, find_n (buffer));
 	backup = buffer + find_n (buffer) + n_exists(buffer);
-	if (temp - ft_strlen(buffer) != 0)
-		result[find_n(buffer)] = '\n';
+	if (temp != 0)
+		result[ft_strlen(result)] = '\n';
 	free(buffer);
 	return (result);
 }
@@ -70,11 +68,16 @@ size_t	find_n(char *buffer)
 	return (counter);
 }
 
-char	*read_line(char *buffer, int buffer_size, int fd)
+char	*read_line(char *buffer, int buffer_size, int fd, ssize_t *size)
 {
+	char *result;
+
+	buffer = malloc(sizeof(char) * buffer_size);
 	if (buffer == NULL)
 		return (NULL);
-	read (fd, buffer, buffer_size);
-	buffer[ft_strlen(buffer)] = 0;
-	return (buffer);
+	*size = read (fd, buffer, buffer_size);
+	result = malloc (sizeof(char) * *size);
+	ft_memmove (result, buffer, (size_t) *size);
+	free(buffer);
+	return (result);
 }
