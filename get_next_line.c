@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/02 17:18:23 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/02 22:12:37 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,27 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	char		*result;
 	static char	*backup;
-	ssize_t			temp;
+	ssize_t		size;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 )
 		return (NULL);
 	buffer = 0;
-	buffer = read_line(buffer, BUFFER_SIZE, fd, &temp);
-	if (ft_strlen(buffer) == 0 && ft_strlen(backup) == 0)
+	buffer = read_line(buffer, BUFFER_SIZE, fd, &size);
+	if (ft_strlen(buffer) == 0 && size == 0)
 		return (NULL);
 	if (backup)
 	{
 		buffer = ft_strjoin(backup, buffer);
 	}
-	while (n_exists(buffer) == 0 && temp != 0)
+	while (n_exists(buffer) == 0 && size != 0)
 	{
-		buffer = ft_strjoin(buffer, read_line(buffer, BUFFER_SIZE, fd, &temp));
+		buffer = ft_strjoin(buffer, read_line(buffer, BUFFER_SIZE, fd, &size));
 	}
 	result = malloc (sizeof(char) * find_n (buffer));
 	ft_memmove(result, buffer, find_n (buffer));
 	backup = buffer + find_n (buffer) + n_exists(buffer);
-	if (temp != 0)
-		result[ft_strlen(result)] = '\n';
+	if (size - ft_strlen(buffer) != 0)
+		result[find_n(buffer)] = '\n';
 	free(buffer);
 	return (result);
 }
@@ -51,7 +51,7 @@ int	n_exists(char *buffer)
 	size_t	counter;
 
 	counter = 0;
-	while (buffer[counter] != 0 && buffer[counter] != '\n')
+	while (buffer[counter] != '\0' && buffer[counter] != '\n')
 		counter++;
 	if (counter < ft_strlen(buffer))
 		return (1);
@@ -71,7 +71,7 @@ size_t	find_n(char *buffer)
 char	*read_line(char *buffer, int buffer_size, int fd, ssize_t *size)
 {
 	char *result;
-
+	
 	buffer = malloc(sizeof(char) * buffer_size);
 	if (buffer == NULL)
 		return (NULL);
