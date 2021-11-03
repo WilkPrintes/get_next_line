@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/02 22:12:37 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/02 22:17:31 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ char	*get_next_line(int fd)
 	buffer = 0;
 	buffer = read_line(buffer, BUFFER_SIZE, fd, &size);
 	if (ft_strlen(buffer) == 0 && size == 0)
+	{
+		free(buffer);
 		return (NULL);
+	}
 	if (backup)
 	{
 		buffer = ft_strjoin(backup, buffer);
