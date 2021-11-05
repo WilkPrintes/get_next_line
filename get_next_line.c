@@ -6,28 +6,33 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/03 23:48:06 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/05 16:47:32 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-char	*read_line(char *buffer, int buffer_size, int fd);
+char	*read_line(char *buffer, size_t buffer_size, int fd, ssize_t size);
 int		n_exists(char *buffer);
 size_t	find_n(char *buffer);
 
 char	*get_next_line(int fd)
 {
 	char		*buffer;
+	ssize_t		size;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 )
 		return (NULL);
 	buffer = 0;
-	buffer = malloc(sizeof(char) * BUFFER_SIZE);
-	if (read (fd, buffer, BUFFER_SIZE) == 0)
+	buffer = malloc(sizeof(char) *(BUFFER_SIZE + 1));
+	size = read (fd, buffer, BUFFER_SIZE);
+	if ( size == 0)
+	{
+		free (buffer);
 		return (NULL);
-	return(read_line(buffer, BUFFER_SIZE, fd));
+	}
+	return(read_line(buffer, BUFFER_SIZE, fd, size));
 }
 
 int	n_exists(char *buffer)
@@ -54,26 +59,28 @@ size_t	find_n(char *buffer)
 	return (counter);
 }
 
-char	*read_line(char *buffer, int buffer_size, int fd)
+char	*read_line(char *buffer, size_t buffer_size, int fd, ssize_t size)
 {
-	ssize_t size;
 	ssize_t total;
 	char *temp;
 	char *result;
+	char *temp2;
 
 	total = 0;
-	temp = malloc(sizeof(char) * 9999);
+	buffer[size] = '\0';
 	temp = ft_strdup(buffer);
-	buffer = malloc(sizeof(char) * buffer_size);
 	while(n_exists(buffer) != 1 && size > 0)
 	{
 		size = read (fd, buffer, buffer_size);
-		temp = ft_strjoin(temp, buffer);
+		buffer[size] = '\0';
+		temp2 = ft_strjoin(temp, buffer);
+		free(temp);
+		temp = ft_strdup(temp2);
+		free(temp2);
 		total = total + size;
 	}
-	printf("len %ld || total %ld\n", ft_strlen(temp), total);
 	free(buffer);
-	result = malloc(sizeof(char) * find_n(temp) + 1);
+	result = malloc(sizeof(char) * (find_n(temp)));
 	ft_memmove(result, temp, find_n(temp));
 	if (size != 0)
 		result[find_n(temp)] = '\n';
