@@ -6,14 +6,14 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/05 17:01:48 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/05 17:27:09 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-char	*read_line(char *buffer, size_t buffer_size, int fd, ssize_t size);
+char	*read_line(char *buffer, size_t buffer_size, int fd, ssize_t size, char **backup);
 int		n_exists(char *buffer);
 size_t	find_n(char *buffer);
 
@@ -21,18 +21,26 @@ char	*get_next_line(int fd)
 {
 	char		*buffer;
 	ssize_t		size;
+	static char	*backup;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 )
 		return (NULL);
 	buffer = 0;
 	buffer = malloc(sizeof(char) *(BUFFER_SIZE + 1));
 	size = read (fd, buffer, BUFFER_SIZE);
-	if ( size == 0)
+	if (size == 0)	
 	{
+		if (backup)
+		{
+			free (buffer);
+			buffer = malloc (sizeof (char) * ft_strlen(ft_strlen(buffer)));
+			buffer = ft_strdup(backup);
+			free(backup);
+		}
 		free (buffer);
 		return (NULL);
 	}
-	return(read_line(buffer, BUFFER_SIZE, fd, size));
+	return(read_line(buffer, BUFFER_SIZE, fd, size, backup));
 }
 
 int	n_exists(char *buffer)
@@ -59,24 +67,23 @@ size_t	find_n(char *buffer)
 	return (counter);
 }
 
-char	*read_line(char *buffer, size_t buffer_size, int fd, ssize_t size)
+char	*read_line(char *buffer, size_t buffer_size, int fd, ssize_t size, char **backup)
 {
 	ssize_t total;
 	char *temp;
 	char *result;
 	char *temp2;
-	static char *backup;
 
 	total = 0;
 	buffer[size] = '\0';
 	temp = ft_strdup(buffer);
-	if (backup != NULL)
+	if (*backup != NULL)
 	{
 		temp2 = ft_strdup(temp);
-		temp = ft_strjoin(backup, temp2);
+		temp = ft_strjoin(*backup, temp2);
 		free(temp2);
-		free(backup);
-		backup = NULL;
+		free(*backup);
+		*backup = NULL;
 	}
 	while(n_exists(buffer) != 1 && size > 0)
 	{
@@ -94,7 +101,7 @@ char	*read_line(char *buffer, size_t buffer_size, int fd, ssize_t size)
 	if (size != 0)
 	{
 		result[find_n(temp)] = '\n';
-		backup = ft_strdup(temp + find_n(temp) + 1);
+		*backup = ft_strdup(temp + find_n(temp) + 1);
 	}
 	free(temp);
 	return (result);
