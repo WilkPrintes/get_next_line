@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/05 17:28:46 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/05 17:29:23 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*get_next_line(int fd)
 		free (buffer);
 		return (NULL);
 	}
-	return(read_line(buffer, BUFFER_SIZE, fd, size, backup));
+	return(read_line(buffer, BUFFER_SIZE, fd, size, &backup));
 }
 
 int	n_exists(char *buffer)
