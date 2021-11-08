@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/08 16:06:27 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/08 16:28:26 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,17 @@ char	*get_next_line(int fd)
 		if (backup)
 		{
 			free (buffer);
-			buffer = malloc (sizeof (char) * ft_strlen(buffer));
+			size = ft_strlen(backup);
+			buffer = malloc (sizeof (char) * (size + 1));
 			buffer = ft_strdup(backup);
 			free(backup);
+			backup = NULL;
 		}
-		free (buffer);
-		return (NULL);
+		else
+		{
+			free (buffer);
+			return (NULL);
+		}
 	}
 	return(read_line(buffer, BUFFER_SIZE, fd, size, &backup));
 }
