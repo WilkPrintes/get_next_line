@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/08 16:28:26 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/08 16:57:00 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*get_next_line(int fd)
 	buffer = 0;
 	buffer = malloc(sizeof(char) *(BUFFER_SIZE + 1));
 	size = read (fd, buffer, BUFFER_SIZE);
-	if (size == 0)	
+	if (size <= 0)	
 	{
 		if (backup)
 		{
