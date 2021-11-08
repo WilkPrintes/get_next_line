@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 11:27:05 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/07 22:44:46 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/07 22:47:42 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 char	*get_next_line(int fd);
 char	*join(char *s1_val, char *s2_val, char *result);
 char	*ft_strjoin(char const *s1, char const *s2);
-size_t	ft_strlen(const char *s);
+ssize_t	ft_strlen(const char *s);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 char	*ft_strdup(const char *src);
 
