@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/08 10:23:28 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/08 15:50:52 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ char	*get_next_line(int fd)
 		free (buffer);
 		return (NULL);
 	}
-	buffer[size] = '\0';
 	return(read_line(buffer, BUFFER_SIZE, fd, size, &backup));
 }
 
@@ -49,11 +48,11 @@ int	n_exists(char *buffer)
 	ssize_t	counter;
 
 	counter = 0;
-	if (!buffer)
+	if (ft_strlen(buffer) <= 0)
 		return (0);
 	while (buffer[counter] != '\0' && buffer[counter] != '\n')
 		counter++;
-	if (counter < ft_strlen(buffer))
+	if (buffer[counter] == '\n') 
 		return (1);
 	return (0);
 }
@@ -63,7 +62,7 @@ ssize_t	find_n(char *buffer)
 	ssize_t	counter;
 
 	counter = 0;
-	while (buffer[counter] != 0 && buffer[counter] != '\n')
+	while (buffer[counter] != '\0' && buffer[counter] != '\n')
 		counter++;
 	return (counter);
 }
@@ -81,6 +80,7 @@ char	*read_line(char *buffer, ssize_t buffer_size, int fd, ssize_t size, char **
 	if (*backup != NULL)
 	{
 		temp2 = ft_strdup(temp);
+		free(temp);
 		temp = ft_strjoin(*backup, temp2);
 		free(temp2);
 		free(*backup);
