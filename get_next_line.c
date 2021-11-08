@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/05 17:38:37 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/06 00:41:29 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	ssize_t		size;
 	static char	*backup;
-
+	
 	if (fd < 0 || BUFFER_SIZE <= 0 )
 		return (NULL);
 	buffer = 0;
