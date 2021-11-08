@@ -6,16 +6,16 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/07 22:36:36 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/07 22:44:16 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-char	*read_line(char *buffer, ssize_t buffer_size, int fd, ssize_t size, char **backup);
+char	*read_line(char *buffer, size_t buffer_size, int fd, ssize_t size, char **backup);
 int		n_exists(char *buffer);
-ssize_t	find_n(char *buffer);
+size_t	find_n(char *buffer);
 
 char	*get_next_line(int fd)
 {
@@ -45,7 +45,7 @@ char	*get_next_line(int fd)
 
 int	n_exists(char *buffer)
 {
-	ssize_t	counter;
+	size_t	counter;
 
 	counter = 0;
 	if (!buffer)
@@ -57,9 +57,9 @@ int	n_exists(char *buffer)
 	return (0);
 }
 
-ssize_t	find_n(char *buffer)
+size_t	find_n(char *buffer)
 {
-	ssize_t	counter;
+	size_t	counter;
 
 	counter = 0;
 	while (buffer[counter] != 0 && buffer[counter] != '\n')
@@ -67,7 +67,7 @@ ssize_t	find_n(char *buffer)
 	return (counter);
 }
 
-char	*read_line(char *buffer, ssize_t buffer_size, int fd, ssize_t size, char **backup)
+char	*read_line(char *buffer, size_t buffer_size, int fd, ssize_t size, char **backup)
 {
 	ssize_t total;
 	char *temp;

@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 11:04:17 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/07 22:27:34 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/07 22:44:50 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*join(char *s1_val, char *s2_val, char *result)
 	return (result);
 }
 
-ssize_t	ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
 	int	counter;
 
