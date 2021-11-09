@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/09 19:16:07 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/09 19:30:37 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*get_next_line(int fd)
 	buffer = 0;
 	if (backup && n_exists(backup) == 1)
 	{
-		buffer = malloc(sizeof (char) * (find_n(backup) + 2));
+		buffer = malloc(sizeof (char) * (find_n(backup) + 1));
 		ft_memmove(buffer, backup, find_n(backup) + 1);
 		buffer[find_n(backup) + 1] = '\0';
 		temp = ft_strdup(backup + find_n(backup) + 1);
@@ -93,7 +93,7 @@ char	*read_line(char *buffer, ssize_t buffer_size, int fd, ssize_t size, char **
 	total = 0;
 	buffer[size] = '\0';
 	temp = ft_strdup(buffer);
-	if (*backup != NULL)
+	if (*backup != NULL )
 	{
 		temp2 = ft_strdup(temp);
 		free(temp);
@@ -113,9 +113,9 @@ char	*read_line(char *buffer, ssize_t buffer_size, int fd, ssize_t size, char **
 		total = total + size;
 	}
 	free(buffer);
-	result = malloc(sizeof(char) * (find_n(temp) + 2));
+	result = malloc(sizeof(char) * (find_n(temp) + 1));
 	ft_memmove(result, temp, find_n(temp) + 1);
-	if (size == buffer_size && size != 1)
+	if (total > buffer_size && size != 1)
 		*backup = ft_strdup(temp + find_n(temp) + 1);
 	result[find_n(temp) + 1] = '\0';
 	free(temp);
