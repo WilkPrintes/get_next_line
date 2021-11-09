@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/09 18:43:00 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/09 18:48:41 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_next_line(int fd)
 	if (backup && n_exists(backup) == 1)
 	{
 		buffer = malloc(sizeof(char) * find_n(backup) + 1);
-		ft_memmove(buffer, backup, find_n(backup));
+		ft_memmove(buffer, backup, find_n(backup) + 1);
 		buffer[find_n(backup) + 1] = '\0';
 		temp = ft_strdup(backup + find_n(backup) + 1);
 		free(backup);
