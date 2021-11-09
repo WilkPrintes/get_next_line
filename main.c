@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 11:27:15 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/07 22:44:52 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/09 18:03:04 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@ int	main(void)
 	int	fd;
 
 	fd = open("./test.txt", O_RDONLY);
-	printf("%s|\n", get_next_line(fd));
-	printf("%s|\n", get_next_line(fd));
-	printf("%s|\n", get_next_line(fd));
-	printf("%s|\n", get_next_line(fd));
-	printf("%s|\n", get_next_line(fd));
-	printf("%s|\n", get_next_line(fd));
-	printf("%s|\n", get_next_line(fd));
-	printf("%s|\n", get_next_line(fd));
-	printf("%s|\n", get_next_line(fd));
-	printf("%s|\n", get_next_line(fd));
-	printf("%s|\n", get_next_line(fd));
-	printf("%s|\n", get_next_line(fd));
-	printf("%s|\n", get_next_line(fd));
-	printf("%s|\n", get_next_line(fd));
+	printf("->%s|", get_next_line(fd));
+	printf("->%s|", get_next_line(fd));
+	printf("->%s|", get_next_line(fd));
+	printf("->%s|", get_next_line(fd));
+	printf("->%s|", get_next_line(fd));
+	printf("->%s|", get_next_line(fd));
+	printf("->%s|", get_next_line(fd));
+	printf("->%s|", get_next_line(fd));
+	printf("->%s|", get_next_line(fd));
+	printf("->%s|", get_next_line(fd));
+	printf("->%s|", get_next_line(fd));
+	printf("->%s|", get_next_line(fd));
+	printf("->%s|", get_next_line(fd));
+	printf("->%s|", get_next_line(fd));
 }
