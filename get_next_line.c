@@ -6,14 +6,14 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/09 22:09:35 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/12 10:36:34 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-char	*read_line(char *buffer, ssize_t buffer_size, int fd, ssize_t size, char **backup);
+char	*read_line(char *buffer, int fd, ssize_t size, char **backup);
 int		n_exists(char *buffer);
 ssize_t	find_n(char *buffer);
 
@@ -23,7 +23,8 @@ char	*get_next_line(int fd)
 	ssize_t		size;
 	static char	*backup;
 	char		*temp;
-	if (fd < 0 || BUFFER_SIZE <= 0 )
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = 0;
 	if (backup && n_exists(backup) == 1)
@@ -39,7 +40,7 @@ char	*get_next_line(int fd)
 	}
 	buffer = malloc(sizeof (char) *(BUFFER_SIZE + 1));
 	size = read (fd, buffer, BUFFER_SIZE);
-	if (size <= 0)	
+	if (size <= 0)
 	{
 		if (backup)
 		{
@@ -56,7 +57,7 @@ char	*get_next_line(int fd)
 			return (NULL);
 		}
 	}
-	return(read_line(buffer, BUFFER_SIZE, fd, size, &backup));
+	return (read_line(buffer, BUFFER_SIZE, fd, size, &backup));
 }
 
 int	n_exists(char *buffer)
@@ -68,7 +69,7 @@ int	n_exists(char *buffer)
 		return (0);
 	while (buffer[counter] != '\0' && buffer[counter] != '\n')
 		counter++;
-	if (buffer[counter] == '\n') 
+	if (buffer[counter] == '\n')
 		return (1);
 	return (0);
 }
@@ -83,12 +84,12 @@ ssize_t	find_n(char *buffer)
 	return (counter);
 }
 
-char	*read_line(char *buffer, ssize_t buffer_size, int fd, ssize_t size, char **backup)
+char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
 {
-	ssize_t total;
-	char *temp;
-	char *result;
-	char *temp2;
+	ssize_t	total;
+	char	*temp;
+	char	*result;
+	char	*temp2;
 
 	total = size;
 	buffer[size] = '\0';
@@ -102,9 +103,9 @@ char	*read_line(char *buffer, ssize_t buffer_size, int fd, ssize_t size, char **
 		free(*backup);
 		*backup = NULL;
 	}
-	while(n_exists(buffer) != 1 && size > 0)
+	while (n_exists(buffer) != 1 && size > 0)
 	{
-		size = read (fd, buffer, buffer_size);
+		size = read (fd, buffer, BUFFER_SIZE);
 		buffer[size] = '\0';
 		temp2 = ft_strjoin(temp, buffer);
 		free(temp);
@@ -115,7 +116,7 @@ char	*read_line(char *buffer, ssize_t buffer_size, int fd, ssize_t size, char **
 	free(buffer);
 	result = malloc(sizeof(char) * (find_n(temp) + 1));
 	ft_memmove(result, temp, find_n(temp) + 1);
-	if (size == buffer_size && size != 1)
+	if (size == BUFFER_SIZE && size != 1)
 		*backup = ft_strdup(temp + find_n(temp) + 1);
 	result[find_n(temp) + 1] = '\0';
 	free(temp);
