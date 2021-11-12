@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 11:04:17 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/08 17:18:34 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/12 10:53:12 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,15 @@ char	*ft_strdup(const char *str)
 
 	if(!str) 
 		return NULL;
+	i = 0;
 	len = ft_strlen(str) + 1;
-	s = (char *)malloc(sizeof(char) * len);
+	s = malloc(sizeof(char) * len);
 	if (s == NULL)
 		return (NULL);
-	i = -1;
-	while (++i < len)
+	while (i < len)
+	{
 		s[i] = str[i];
+		i++;
+	}	
 	return (s);
 }

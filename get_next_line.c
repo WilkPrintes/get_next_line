@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/12 10:43:50 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/12 10:51:31 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ char	*get_next_line(int fd)
 		{
 			free (buffer);
 			size = ft_strlen(backup);
-			buffer = malloc (sizeof (char) * (size + 1));
 			buffer = ft_strdup(backup);
 			free(backup);
 			backup = NULL;
@@ -81,9 +80,7 @@ ssize_t	find_n(char *buffer)
 	counter = 0;
 	while (buffer[counter] != '\0' && buffer[counter] != '\n')
 		counter++;
-	if (buffer[counter] == '\n')
-		return (counter);
-	return (-1);
+	return (counter);
 }
 
 char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
@@ -105,7 +102,7 @@ char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
 		free(*backup);
 		*backup = NULL;
 	}
-	while (find_n(buffer) < 0 && size > 0)
+	while (n_exists(buffer) != 1 && size > 0)
 	{
 		size = read (fd, buffer, BUFFER_SIZE);
 		buffer[size] = '\0';
