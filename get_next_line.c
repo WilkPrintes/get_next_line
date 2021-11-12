@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/12 10:39:35 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/12 10:43:50 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,9 @@ ssize_t	find_n(char *buffer)
 	counter = 0;
 	while (buffer[counter] != '\0' && buffer[counter] != '\n')
 		counter++;
-	return (counter);
+	if (buffer[counter] == '\n')
+		return (counter);
+	return (-1);
 }
 
 char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
@@ -103,7 +105,7 @@ char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
 		free(*backup);
 		*backup = NULL;
 	}
-	while (n_exists(buffer) != 1 && size > 0)
+	while (find_n(buffer) < 0 && size > 0)
 	{
 		size = read (fd, buffer, BUFFER_SIZE);
 		buffer[size] = '\0';
