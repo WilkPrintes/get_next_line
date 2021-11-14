@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/14 13:58:31 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/14 14:20:29 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ char	*get_next_line(int fd)
 	buffer = 0;
 	if (backup && n_exists(backup) == 1)
 	{
-		buffer = malloc(sizeof (char) * (find_n(backup) + 1));
+		buffer = malloc(sizeof (char) * (find_n(backup) + 2));
 		if (buffer == NULL)
 			return (NULL);
 		ft_memmove(buffer, backup, find_n(backup) + 1);
-		buffer[find_n(backup) + 1] = '\0';
 		temp = ft_strdup(backup + find_n(backup) + 1);
 		free(backup);
 		backup = ft_strdup(temp);
@@ -108,6 +107,8 @@ char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
 	}
 	while (n_exists(buffer) != 1 && size > 0)
 	{
+		free(buffer);
+		buffer = malloc(sizeof (char) *(BUFFER_SIZE + 1));
 		size = read (fd, buffer, BUFFER_SIZE);
 		buffer[size] = '\0';
 		temp2 = ft_strjoin(temp, buffer);
@@ -119,7 +120,7 @@ char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
 	free(buffer);
 	result = ft_substr(temp, 0, find_n(temp) + 1);
 	if (ft_strlen(result) < ft_strlen(temp))
-		*backup = ft_substr(temp, find_n(temp) + 1, ft_strlen(temp));
+		*backup = ft_substr(temp, find_n(temp) + n_exists(result), ft_strlen(temp));
 	free(temp);
 	return (result);
 }
