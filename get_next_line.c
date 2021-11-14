@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/14 14:20:29 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/14 14:43:33 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*get_next_line(int fd)
 		if (buffer == NULL)
 			return (NULL);
 		ft_memmove(buffer, backup, find_n(backup) + 1);
+		buffer[find_n(backup) + 1] = '\0';
 		temp = ft_strdup(backup + find_n(backup) + 1);
 		free(backup);
 		backup = ft_strdup(temp);
@@ -119,6 +120,11 @@ char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
 	}
 	free(buffer);
 	result = ft_substr(temp, 0, find_n(temp) + 1);
+	if(ft_strlen(result) == 0)
+	{
+		free(result);
+		return (NULL);
+	}
 	if (ft_strlen(result) < ft_strlen(temp))
 		*backup = ft_substr(temp, find_n(temp) + n_exists(result), ft_strlen(temp));
 	free(temp);
