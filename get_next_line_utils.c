@@ -6,48 +6,38 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 11:04:17 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/14 13:21:47 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/14 19:13:49 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*join(char *s1_val, char *s2_val, char *result);
-
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(const char *str1, const char *str2)
 {
+	size_t	len;
+	size_t	index;
 	char	*result;
-	char	*s1_val;
-	char	*s2_val;
 
-	if (!s1 || !s2)
+	len = ft_strlen(str1) + ft_strlen(str2);
+	if (len == 0)
 		return (NULL);
-	s1_val = (char *)s1;
-	s2_val = (char *)s2;
-	result = malloc(sizeof(char) * (ft_strlen(s1_val) + ft_strlen(s2_val)) + 1);
+	result = malloc((len + 1) * sizeof(char));
 	if (result == NULL)
 		return (NULL);
-	result = join(s1_val, s2_val, result);
-	return (result);
-}
-
-char	*join(char *s1_val, char *s2_val, char *result)
-{
-	size_t	counter;
-
-	counter = 0;
-	while (s1_val[counter] != '\0')
+	index = 0;
+	while (str1 && *str1)
 	{
-		result[counter] = s1_val[counter];
-		counter++;
+		result[index] = *str1;
+		index += 1;
+		str1++;
 	}
-	counter = 0;
-	while (s2_val[counter] != '\0')
+	while (str2 && *str2)
 	{
-		result[ft_strlen(s1_val) + counter] = s2_val[counter];
-		counter++;
+		result[index] = *str2;
+		index += 1;
+		str2++;
 	}
-	result[ft_strlen(s1_val) + counter] = '\0';
+	result[index] = '\0';
 	return (result);
 }
 
@@ -63,34 +53,6 @@ ssize_t	ft_strlen(const char *s)
 		counter++;
 	}
 	return (counter);
-}
-
-void	*ft_memmove(void *dest, const void *src, size_t n)
-{
-	size_t	count;
-	char	*dest_value;
-	char	*src_value;
-
-	src_value = (char *) src;
-	dest_value = (char *) dest;
-	count = 0;
-	if (dest > src)
-	{
-		while (count < n)
-		{
-			dest_value[n - count - 1] = src_value[n - count - 1];
-			count++;
-		}
-	}
-	else if (dest < src)
-	{
-		while (count < n)
-		{
-			dest_value[count] = src_value[count];
-			count++;
-		}
-	}
-	return (dest);
 }
 
 char	*ft_strdup(const char *str)

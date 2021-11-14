@@ -6,12 +6,11 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/14 14:56:02 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/14 19:28:44 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 char	*read_line(char *buffer, int fd, ssize_t size, char **backup);
 int		n_exists(char *buffer);
@@ -26,14 +25,9 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer = 0;
 	if (backup && n_exists(backup) == 1)
 	{
-		buffer = malloc(sizeof (char) * (find_n(backup) + 2));
-		if (buffer == NULL)
-			return (NULL);
-		ft_memmove(buffer, backup, find_n(backup) + 1);
-		buffer[find_n(backup) + 1] = '\0';
+		buffer = ft_substr(backup, 0, find_n(backup) + 1);
 		temp = ft_strdup(backup + find_n(backup) + 1);
 		free(backup);
 		backup = ft_strdup(temp);
@@ -91,9 +85,9 @@ char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
 {
 	ssize_t	total;
 	char	*temp;
-	char	*result;
 	char	*temp2;
-
+	char	*result;
+	 
 	total = size;
 	buffer[size] = '\0';
 	temp = ft_strdup(buffer);
