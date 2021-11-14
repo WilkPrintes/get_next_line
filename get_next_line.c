@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/14 12:08:09 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/14 13:18:12 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,8 @@ char	*get_next_line(int fd)
 		free(temp);
 		return (buffer);
 	}
-	buffer = malloc(sizeof (char) *(BUFFER_SIZE + 1));
-	size = read (fd, buffer, 0);
-	if (size < 0)
+	size = read (fd, buffer, BUFFER_SIZE);
+	if (size < 0 && !backup)
 	{
 		free (buffer);
 		return (NULL);
@@ -79,20 +78,17 @@ char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
 	char	*result;
 	char	*temp2;
 
-	total = size;
-	buffer[size] = '\0';
-	temp = ft_strdup(buffer);
+	printf(".-.");
 	if (*backup != NULL)
 	{
-		temp2 = ft_strdup(temp);
-		free(temp);
-		temp = ft_strjoin(*backup, temp2);
-		free(temp2);
+		buffer = ft_strdup(*backup);
 		free(*backup);
 		*backup = NULL;
 	}
+	buffer = malloc(sizeof (char) * (BUFFER_SIZE + 1));
 	while (n_exists(buffer) != 1 && size > 0)
 	{
+		printf("eita");
 		size = read (fd, buffer, BUFFER_SIZE);
 		buffer[size] = '\0';
 		temp2 = ft_strjoin(temp, buffer);
