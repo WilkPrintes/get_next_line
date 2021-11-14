@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/14 12:01:02 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/14 12:02:55 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,7 @@ char	*read_line(char *buffer, int fd, char **backup)
 	total = 0;
 	if (*backup != NULL)
 	{
-		temp2 = ft_strdup(temp);
-		free(temp);
-		temp = ft_strjoin(*backup, temp2);
-		free(temp2);
-		free(*backup);
+		temp = ft_strdup(backup);
 		*backup = NULL;
 	}
 	while (n_exists(buffer) != 1 && size > 0)
