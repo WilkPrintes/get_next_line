@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/13 21:53:44 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/13 21:56:53 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ char	*get_next_line(int fd)
 			return (NULL);
 		}
 	}
+	if (n_exists(buffer) == 1 && buffer[find_n(buffer)] == '\n')
+		return (buffer);
 	return (read_line(buffer, fd, size, &backup));
 }
 
@@ -115,14 +117,7 @@ char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
 	free(buffer);
 	result = malloc(sizeof(char) * (find_n(temp) + 1));
 	ft_memmove(result, temp, find_n(temp) + 1);
-	if (total == BUFFER_SIZE)
-	{
-		buffer = malloc(sizeof (char) * BUFFER_SIZE);
-		read(fd, buffer, BUFFER_SIZE);
-		*backup = buffer;
-		free(buffer);
-	}
-	if (BUFFER_SIZE != 1 && !backup)
+	if (BUFFER_SIZE != 1)
 	{
 		if (total > ft_strlen(result) || total == BUFFER_SIZE)
 			*backup = ft_strdup(temp + find_n(temp) + 1);
