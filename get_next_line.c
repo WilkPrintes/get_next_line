@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/14 14:43:33 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/14 14:45:42 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
 	if(ft_strlen(result) == 0)
 	{
 		free(result);
+		free(temp);
 		return (NULL);
 	}
 	if (ft_strlen(result) < ft_strlen(temp))
