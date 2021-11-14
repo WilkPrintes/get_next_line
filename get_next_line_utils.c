@@ -6,91 +6,20 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 11:04:17 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/12 10:58:04 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/14 10:39:46 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*join(char *s1_val, char *s2_val, char *result);
-
-char	*ft_strjoin(char const *s1, char const *s2)
+size_t	ft_strlen(const char *str)
 {
-	char	*result;
-	char	*s1_val;
-	char	*s2_val;
+	size_t	i;
 
-	if (!s1 || !s2)
-		return (NULL);
-	s1_val = (char *)s1;
-	s2_val = (char *)s2;
-	result = malloc(sizeof(char) * (ft_strlen(s1_val) + ft_strlen(s2_val)) + 1);
-	if (result == NULL)
-		return (NULL);
-	result = join(s1_val, s2_val, result);
-	return (result);
-}
-
-char	*join(char *s1_val, char *s2_val, char *result)
-{
-	size_t	counter;
-
-	counter = 0;
-	while (s1_val[counter] != '\0')
-	{
-		result[counter] = s1_val[counter];
-		counter++;
-	}
-	counter = 0;
-	while (s2_val[counter] != '\0')
-	{
-		result[ft_strlen(s1_val) + counter] = s2_val[counter];
-		counter++;
-	}
-	result[ft_strlen(s1_val) + counter] = '\0';
-	return (result);
-}
-
-ssize_t	ft_strlen(const char *s)
-{
-	int	counter;
-
-	counter = 0;
-	if (!s)
-		return 0;
-	while (s[counter] != '\0')
-	{
-		counter++;
-	}
-	return (counter);
-}
-
-void	*ft_memmove(void *dest, const void *src, size_t n)
-{
-	size_t	count;
-	char	*dest_value;
-	char	*src_value;
-
-	src_value = (char *) src;
-	dest_value = (char *) dest;
-	count = 0;
-	if (dest > src)
-	{
-		while (count < n)
-		{
-			dest_value[n - count - 1] = src_value[n - count - 1];
-			count++;
-		}
-	}
-	else if (dest < src)
-	{
-		while (count < n)
-		{
-			dest_value[count] = src_value[count];
-			count++;
-		}
-	}
-	return (dest);
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }
 
 char	*ft_strdup(const char *str)
@@ -99,17 +28,83 @@ char	*ft_strdup(const char *str)
 	size_t	len;
 	char	*s;
 
-	if(!str) 
-		return NULL;
-	i = 0;
 	len = ft_strlen(str) + 1;
-	s = malloc(sizeof(char) * len);
+	s = (char *)malloc(sizeof(char) * len);
 	if (s == NULL)
 		return (NULL);
-	while (i < len)
-	{
+	i = -1;
+	while (++i < len)
 		s[i] = str[i];
+	return (s);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	size_t	i;
+	size_t	srclen;
+	char	*str;
+
+	if (!s)
+		return (NULL);
+	srclen = ft_strlen(s);
+	if (start > srclen)
+		return (ft_strdup(""));
+	if (start + len > srclen)
+		len = srclen - start;
+	str = (char *)malloc(sizeof(char) * len + 1);
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (s[start + i] && i < len)
+	{
+		str[i] = s[start + i];
 		i++;
 	}
-	return (s);
+	str[i] = '\0';
+	return (str);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	size_t	i;
+
+	i = 0;
+	if ((char)c == '\0')
+	{
+		i = ft_strlen((char *)s);
+		return ((char *)s + i);
+	}
+	while (((char *)s)[i] != '\0')
+	{
+		if (((char *)s)[i] == (char)c)
+			return ((char *)s + 1);
+		i++;
+	}
+	return (0);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	size_t	total_len;
+	size_t	i;
+	size_t	j;
+	char	*ptr;
+
+	if (!s1 || !s2)
+		return (NULL);
+	i = 0;
+	j = 0;
+	total_len = ft_strlen(s1) + ft_strlen(s2);
+	ptr = (char *)malloc(total_len * sizeof(char) + 1);
+	if (!ptr)
+		return (NULL);
+	while (s1[i] != '\0')
+	{
+		ptr[i] = s1[i];
+		i++;
+	}
+	while (s2[j] != '\0')
+		ptr[i++] = s2[j++];
+	ptr[i] = '\0';
+	return (ptr);
 }
