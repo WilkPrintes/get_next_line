@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/14 12:00:07 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/14 12:01:02 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char	*read_line(char *buffer, int fd, char **backup)
 	char	*temp;
 	char	*result;
 	char	*temp2;
+	ssize_t	size;
 
 	total = 0;
 	if (*backup != NULL)
