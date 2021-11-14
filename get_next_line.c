@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/14 13:18:12 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/14 13:19:30 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,23 @@ char	*get_next_line(int fd)
 		free(temp);
 		return (buffer);
 	}
+	buffer = malloc(sizeof (char) *(BUFFER_SIZE + 1));
 	size = read (fd, buffer, BUFFER_SIZE);
-	if (size < 0 && !backup)
+	if (size <= 0)
 	{
-		free (buffer);
-		return (NULL);
+		if (backup)
+		{
+			free (buffer);
+			size = ft_strlen(backup);
+			buffer = ft_strdup(backup);
+			free(backup);
+			backup = NULL;
+		}
+		else
+		{
+			free (buffer);
+			return (NULL);
+		}
 	}
 	return (read_line(buffer, fd, size, &backup));
 }
@@ -78,17 +90,20 @@ char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
 	char	*result;
 	char	*temp2;
 
-	printf(".-.");
+	total = size;
+	buffer[size] = '\0';
+	temp = ft_strdup(buffer);
 	if (*backup != NULL)
 	{
-		buffer = ft_strdup(*backup);
+		temp2 = ft_strdup(temp);
+		free(temp);
+		temp = ft_strjoin(*backup, temp2);
+		free(temp2);
 		free(*backup);
 		*backup = NULL;
 	}
-	buffer = malloc(sizeof (char) * (BUFFER_SIZE + 1));
 	while (n_exists(buffer) != 1 && size > 0)
 	{
-		printf("eita");
 		size = read (fd, buffer, BUFFER_SIZE);
 		buffer[size] = '\0';
 		temp2 = ft_strjoin(temp, buffer);
