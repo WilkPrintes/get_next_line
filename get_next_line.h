@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 11:27:05 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/14 11:54:34 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/14 13:32:16 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ char	*ft_strjoin(char const *s1, char const *s2);
 ssize_t	ft_strlen(const char *s);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 char	*ft_strdup(const char *src);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif
