@@ -6,21 +6,20 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/14 11:57:30 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/14 12:00:07 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-char	*read_line(char *buffer, int fd, ssize_t size, char **backup);
+char	*read_line(char *buffer, int fd, char **backup);
 int		n_exists(char *buffer);
 ssize_t	find_n(char *buffer);
 
 char	*get_next_line(int fd)
 {
 	char		*buffer;
-	ssize_t		size;
 	static char	*backup;
 	char		*temp;
 
@@ -44,7 +43,7 @@ char	*get_next_line(int fd)
 		free (buffer);
 		return (NULL);
 	}
-	return (read_line(buffer, fd, size, &backup));
+	return (read_line(buffer, fd, &backup));
 }
 
 int	n_exists(char *buffer)
@@ -71,16 +70,14 @@ ssize_t	find_n(char *buffer)
 	return (counter);
 }
 
-char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
+char	*read_line(char *buffer, int fd, char **backup)
 {
 	ssize_t	total;
 	char	*temp;
 	char	*result;
 	char	*temp2;
 
-	total = size;
-	buffer[size] = '\0';
-	temp = ft_strdup(buffer);
+	total = 0;
 	if (*backup != NULL)
 	{
 		temp2 = ft_strdup(temp);
