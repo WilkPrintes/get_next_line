@@ -6,16 +6,16 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/15 00:22:19 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/15 00:27:27 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*read_line(char *buffer, int fd, ssize_t size, char **backup);
-int		has_nl(char *buffer);
-char	*free_null(char *str);
-void	new_backup(char **backup, char **temp, char **aux);
+static char	*read_line(char *buffer, int fd, ssize_t size, char **backup);
+static int		has_nl(char *buffer);
+static char	*free_null(char *str);
+static void	new_backup(char **backup, char **temp, char **aux);
 
 char	*get_next_line(int fd)
 {
@@ -42,13 +42,13 @@ char	*get_next_line(int fd)
 	return (read_line(buffer, fd, size, &backup));
 }
 
-char	*free_null(char *str)
+static char	*free_null(char *str)
 {
 	free(str);
 	return (NULL);
 }
 
-int	has_nl(char *buffer)
+static int	has_nl(char *buffer)
 {
 	size_t	counter;
 
@@ -62,7 +62,7 @@ int	has_nl(char *buffer)
 	return (0);
 }
 
-char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
+static char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
 {
 	char	*temp;
 	char	*aux;
@@ -91,7 +91,7 @@ char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
 	return (aux);
 }
 
-void	new_backup(char **backup, char **temp, char **aux)
+static void	new_backup(char **backup, char **temp, char **aux)
 {
 	*aux = ft_strdup(*temp);
 	free(*temp);
