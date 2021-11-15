@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 11:04:17 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/14 19:13:49 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/14 21:13:45 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,14 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	str[i] = '\0';
 	return (str);
+}
+
+ssize_t	find_n(char *buffer)
+{
+	ssize_t	counter;
+
+	counter = 0;
+	while (buffer[counter] != '\0' && buffer[counter] != '\n')
+		counter++;
+	return (counter);
 }
