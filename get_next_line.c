@@ -6,14 +6,14 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/15 00:27:27 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/15 00:28:53 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 static char	*read_line(char *buffer, int fd, ssize_t size, char **backup);
-static int		has_nl(char *buffer);
+static int	has_nl(char *buffer);
 static char	*free_null(char *str);
 static void	new_backup(char **backup, char **temp, char **aux);
 

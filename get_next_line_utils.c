@@ -6,13 +6,13 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 11:04:17 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/15 00:26:56 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/15 00:29:25 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*ft_strjoin(const char *str1, const char *str2)
+char	*ft_strjoin(const char *str1, const char *str2)
 {
 	size_t	len;
 	size_t	index;
@@ -41,7 +41,7 @@ static char	*ft_strjoin(const char *str1, const char *str2)
 	return (result);
 }
 
-static ssize_t	ft_strlen(const char *s)
+ssize_t	ft_strlen(const char *s)
 {
 	int	counter;
 
@@ -55,7 +55,7 @@ static ssize_t	ft_strlen(const char *s)
 	return (counter);
 }
 
-static char	*ft_strdup(const char *str)
+char	*ft_strdup(const char *str)
 {
 	size_t	i;
 	size_t	len;
@@ -76,7 +76,7 @@ static char	*ft_strdup(const char *str)
 	return (s);
 }
 
-static char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;
 	size_t	srclen;
@@ -102,7 +102,7 @@ static char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
-static size_t	find_n(char *buffer)
+size_t	find_n(char *buffer)
 {
 	size_t	counter;
 
