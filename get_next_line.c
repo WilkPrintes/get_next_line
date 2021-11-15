@@ -6,16 +6,16 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/14 23:16:08 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/14 23:27:04 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 char	*read_line(char *buffer, int fd, ssize_t size, char **backup);
-int		n_exists(char *buffer);
-char *free_null(char *str1);
-void new_backup(char **backup, char **temp, char **aux);
+int		has_nl(char *buffer);
+char	*free_null(char *str1);
+void	new_backup(char **backup, char **temp, char **aux);
 
 char	*get_next_line(int fd)
 {
@@ -42,13 +42,13 @@ char	*get_next_line(int fd)
 	return (read_line(buffer, fd, size, &backup));
 }
 
-char *free_null(char *str1)
+char	*free_null(char *str1)
 {
 	free(str1);
 	return (NULL);
 }
 
-int	n_exists(char *buffer)
+int	has_nl(char *buffer)
 {
 	ssize_t	counter;
 
@@ -70,7 +70,7 @@ char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
 	temp = ft_strdup(buffer);
 	if (*backup != NULL)
 		new_backup(backup, &temp, &aux);
-	while (n_exists(buffer) != 1 && size > 0)
+	while (has_nl(buffer) != 1 && size > 0)
 	{
 		free(buffer);
 		buffer = malloc(sizeof (char) *(BUFFER_SIZE + 1));
@@ -84,14 +84,14 @@ char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
 	free(buffer);
 	aux = ft_substr(temp, 0, find_n(temp) + 1);
 	if (ft_strlen(aux) < ft_strlen(temp))
-		*backup = ft_substr(temp, find_n(temp) + n_exists(aux), ft_strlen(temp));
+		*backup = ft_substr(temp, find_n(temp) + has_nl(aux), ft_strlen(temp));
 	free(temp);
-	if(ft_strlen(aux) == 0)
+	if (ft_strlen(aux) == 0)
 		return (free_null(aux));
 	return (aux);
 }
 
-void new_backup(char **backup, char **temp, char **aux)
+void	new_backup(char **backup, char **temp, char **aux)
 {
 	*aux = ft_strdup(*temp);
 	free(*temp);

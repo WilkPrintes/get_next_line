@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 11:04:17 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/14 21:13:45 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/14 23:27:56 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ ssize_t	ft_strlen(const char *s)
 
 	counter = 0;
 	if (!s)
-		return 0;
+		return (0);
 	while (s[counter] != '\0')
 	{
 		counter++;
@@ -61,8 +61,8 @@ char	*ft_strdup(const char *str)
 	size_t	len;
 	char	*s;
 
-	if(!str) 
-		return NULL;
+	if (!str)
+		return (NULL);
 	i = 0;
 	len = ft_strlen(str) + 1;
 	s = malloc(sizeof(char) * len);
