@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/14 22:53:05 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/14 23:16:08 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char	*read_line(char *buffer, int fd, ssize_t size, char **backup);
 int		n_exists(char *buffer);
 char *free_null(char *str1);
+void new_backup(char **backup, char **temp, char **aux);
 
 char	*get_next_line(int fd)
 {
@@ -64,35 +65,37 @@ int	n_exists(char *buffer)
 char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
 {
 	char	*temp;
-	char	*temp2;
-	char	*result;
+	char	*aux;
 
 	temp = ft_strdup(buffer);
 	if (*backup != NULL)
-	{
-		temp2 = ft_strdup(temp);
-		free(temp);
-		temp = ft_strjoin(*backup, temp2);
-		free(temp2);
-		*backup = free_null(*backup);
-	}
+		new_backup(backup, &temp, &aux);
 	while (n_exists(buffer) != 1 && size > 0)
 	{
 		free(buffer);
 		buffer = malloc(sizeof (char) *(BUFFER_SIZE + 1));
 		size = read (fd, buffer, BUFFER_SIZE);
 		buffer[size] = '\0';
-		temp2 = ft_strjoin(temp, buffer);
+		aux = ft_strjoin(temp, buffer);
 		free(temp);
-		temp = ft_strdup(temp2);
-		free(temp2);
+		temp = ft_strdup(aux);
+		free(aux);
 	}
 	free(buffer);
-	result = ft_substr(temp, 0, find_n(temp) + 1);
-	if (ft_strlen(result) < ft_strlen(temp))
-		*backup = ft_substr(temp, find_n(temp) + n_exists(result), ft_strlen(temp));
+	aux = ft_substr(temp, 0, find_n(temp) + 1);
+	if (ft_strlen(aux) < ft_strlen(temp))
+		*backup = ft_substr(temp, find_n(temp) + n_exists(aux), ft_strlen(temp));
 	free(temp);
-	if(ft_strlen(result) == 0)
-		return (free_null(result));
-	return (result);
+	if(ft_strlen(aux) == 0)
+		return (free_null(aux));
+	return (aux);
+}
+
+void new_backup(char **backup, char **temp, char **aux)
+{
+	*aux = ft_strdup(*temp);
+	free(*temp);
+	*temp = ft_strjoin(*backup, *aux);
+	free(*aux);
+	*backup = free_null(*backup);
 }
