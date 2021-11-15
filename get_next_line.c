@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:56:53 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/14 23:27:04 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/15 00:22:19 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*read_line(char *buffer, int fd, ssize_t size, char **backup);
 int		has_nl(char *buffer);
-char	*free_null(char *str1);
+char	*free_null(char *str);
 void	new_backup(char **backup, char **temp, char **aux);
 
 char	*get_next_line(int fd)
@@ -25,15 +25,15 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer = malloc(sizeof (char) *(BUFFER_SIZE + 1));
+	buffer = malloc(sizeof (char) * (BUFFER_SIZE + 1));
 	if (buffer == NULL)
 		return (NULL);
-	size = read (fd, buffer, BUFFER_SIZE);
+	size = read(fd, buffer, BUFFER_SIZE);
 	if (size <= 0)
 	{
 		if (!backup)
 			return (free_null(buffer));
-		free (buffer);
+		free(buffer);
 		size = ft_strlen(backup);
 		buffer = ft_strdup(backup);
 		backup = free_null(backup);
@@ -42,15 +42,15 @@ char	*get_next_line(int fd)
 	return (read_line(buffer, fd, size, &backup));
 }
 
-char	*free_null(char *str1)
+char	*free_null(char *str)
 {
-	free(str1);
+	free(str);
 	return (NULL);
 }
 
 int	has_nl(char *buffer)
 {
-	ssize_t	counter;
+	size_t	counter;
 
 	counter = 0;
 	if (ft_strlen(buffer) <= 0)
@@ -73,8 +73,8 @@ char	*read_line(char *buffer, int fd, ssize_t size, char **backup)
 	while (has_nl(buffer) != 1 && size > 0)
 	{
 		free(buffer);
-		buffer = malloc(sizeof (char) *(BUFFER_SIZE + 1));
-		size = read (fd, buffer, BUFFER_SIZE);
+		buffer = malloc(sizeof (char) * (BUFFER_SIZE + 1));
+		size = read(fd, buffer, BUFFER_SIZE);
 		buffer[size] = '\0';
 		aux = ft_strjoin(temp, buffer);
 		free(temp);

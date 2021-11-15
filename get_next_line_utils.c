@@ -6,7 +6,7 @@
 /*   By: wprintes <wilkp90@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 11:04:17 by wprintes          #+#    #+#             */
-/*   Updated: 2021/11/14 23:27:56 by wprintes         ###   ########.fr       */
+/*   Updated: 2021/11/15 00:17:57 by wprintes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (ft_strdup(""));
 	if (start + len > srclen)
 		len = srclen - start;
-	str = (char *)malloc(sizeof(char) * len + 1);
+	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -102,9 +102,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
-ssize_t	find_n(char *buffer)
+size_t	find_n(char *buffer)
 {
-	ssize_t	counter;
+	size_t	counter;
 
 	counter = 0;
 	while (buffer[counter] != '\0' && buffer[counter] != '\n')
